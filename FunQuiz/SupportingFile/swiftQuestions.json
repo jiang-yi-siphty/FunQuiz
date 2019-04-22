@@ -1,0 +1,25 @@
+{
+    "domain": "swift",
+    "questions": [
+        {
+            "question": "Extensions must not contain stored properties?",
+            "answer": true
+        },
+        {
+            "question": "A struct created as a var can have its variables changed?",
+            "answer": true
+        },
+        {
+            "question": "Class is value type?",
+            "answer": false
+        },
+        {
+            "question": "Mutating functions can be used in classes?",
+            "answer": false
+        },
+        {
+            "question": "Enumerations in Swift can conform to protocols?",
+            "answer": true
+        }
+    ]
+}
