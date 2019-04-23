@@ -8,11 +8,6 @@
 
 import Foundation
 
-protocol QuestionsStoreDelegate: class {
-    func questionsStoreDidUpdate(questionsStore: QuestionsStore)
-    func questionsStoreWillUpdate()
-}
-
 class QuestionsStore {
     
     static let shared = QuestionsStore()
@@ -22,30 +17,27 @@ class QuestionsStore {
     var dataClient: DataClient
     
     // MARK: Data Binding
-    var questions: Questions? {
+    var quiz: Questions? {
         didSet {
-            didUpdate.forEach { closure in
-                closure?()
-            }
+            didUpdate?()
+        }
+    }
+    
+    var alertMessage: String? {
+        didSet {
+            guard let message = alertMessage else { return }
+            hasCommonError?(.customError(message))
         }
     }
     
     // MARK: Events 
-    var didUpdate = [(() -> Void)?]()
+    var didUpdate: (() -> Void)?
+    var hasCommonError: ((CommonError) -> Void)?
     
     
     // MARK: Init
     init(dataClient: DataClient = DataClient()) {
         self.dataClient = dataClient
-    }
-    
-    func load() {
-        
-    }
-    
-    func reset() {
-        didUpdate = [(() -> Void)?]()
-        load()
     }
     
 }
@@ -54,8 +46,26 @@ class QuestionsStore {
 // MARK: - Session Handling
 extension QuestionsStore {
     
-    func fetchQuestions(completionHandler: @escaping (Result<[Question], ServerError>) -> Void) {
+    func fetchQuestions() {
         
+        dataClient.dataRequest(.questionsData) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                guard let data = data else {
+                    self.alertMessage = "We run out of question..."
+                    return 
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    self.quiz = try decoder.decode(Questions.self, from: data)
+                } catch let error {
+                    self.hasCommonError?(.parsingError(error))
+                }
+            case .failure(let error):
+                self.hasCommonError?(error)
+            }   
+        }
     }
     
 }

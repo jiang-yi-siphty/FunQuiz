@@ -9,7 +9,7 @@ import Foundation
 
 class DataClient: DataService {
     
-    func dataRequest(_ config: DataConfig, completionHandler: @escaping ((Result<Data?, ServerError>) -> Void)) {
+    func dataRequest(_ config: DataConfig, completionHandler: @escaping ((Result<Data?, CommonError>) -> Void)) {
         dataRequestByFileNameSession(config, completionHandler: completionHandler)
     }
     
@@ -18,7 +18,7 @@ class DataClient: DataService {
 extension DataClient {
     
     // If someday we have API server, we can make func networkRequestByNSURLSession() to get data response
-    fileprivate func dataRequestByFileNameSession(_ config: DataConfig, completionHandler: @escaping ((Result<Data?, ServerError>) -> Void)) {
+    fileprivate func dataRequestByFileNameSession(_ config: DataConfig, completionHandler: @escaping ((Result<Data?, CommonError>) -> Void)) {
         completionHandler(JsonFileLoader.loadJson(fileName: config.fileName))
     }
     

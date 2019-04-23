@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class QuestionsViewModel {
+    
+    var store: QuestionsStore
+    
+    
+    // MARK: Funcs
+    init(_ store: QuestionsStore = QuestionsStore.shared) {
+        self.store = store
+        store.fetchQuestions()
+    }
+}

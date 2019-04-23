@@ -9,28 +9,46 @@
 import Foundation
 
 protocol DataService {
-    func dataRequest(_ config: DataConfig, completionHandler: @escaping ((Result<Data?, ServerError>) -> Void))
+    func dataRequest(_ config: DataConfig, completionHandler: @escaping ((Result<Data?, CommonError>) -> Void))
 }
 
-enum ServerError: Error {
-    case parsingIssue(_ jsonFileName: String, error: Error)
-    case noFile
+enum CommonError: Error {
+    case fileError(_ jsonFileName: String?, error: Error)
+    case customError(_ errorMessage: String)
+    case parsingError(_ error: Error)
+    case urlError
     
     var description: String {
         switch self {
-        case .parsingIssue(let fileName, _):
-            return "Error!! Unable to parse  \(fileName).json"
-        case .noFile:
-            return "Invalid path."
+        case .fileError(let fileName, _):
+            if let fileName = fileName {
+                return "Generic Error with file \(fileName)"
+            } else {
+                return "Generic Error"
+            }
+        case .customError(let errorMessage):
+             return errorMessage
+        case .parsingError(_):
+            return "Parsing Error!! Unable to parse the json data"
+        case .urlError:
+            return "Invalid path url."
         }
     }
     
     var recoverySuggestion: String? {
         switch self {
-        case .parsingIssue(let fileName, let error):
-            return "Parsing \(fileName).json has issue: \(error.localizedDescription)"
-        case .noFile:
-            return "Please check: Is the file in the project bundle? "
+        case .fileError(let fileName, let error):
+            if let fileName = fileName {
+            return "Opening \(fileName).json get generic error: \(error.localizedDescription)"
+            } else {
+                return "\(error.localizedDescription)"
+            }
+        case .customError(_):
+            return nil
+        case .parsingError(let error):
+            return "Parsing the json data has the issue: \(error.localizedDescription)"
+        case .urlError:
+            return "Please check: Is the file in the project bundle? Is the URL has correct format? "
         }
     }
     
@@ -50,15 +68,15 @@ enum DataConfig {
 
 class JsonFileLoader {
     
-    class func loadJson(fileName: String) -> Result<Data?, ServerError> {
+    class func loadJson(fileName: String) -> Result<Data?, CommonError> {
         if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
             do {
                 return .success(try NSData(contentsOf: url) as Data)
             } catch let error {
-                return .failure(.parsingIssue(fileName, error: error) )
+                return .failure(.fileError(fileName, error: error) )
             }
         } else {
-            return .failure(.noFile)
+            return .failure(.urlError)
         }
     }
     

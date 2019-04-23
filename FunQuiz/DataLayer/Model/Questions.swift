@@ -15,4 +15,5 @@ struct Questions: Codable {
 struct Question: Codable {
     let question: String
     let answer: Bool
+    let correct: Bool?
 }
