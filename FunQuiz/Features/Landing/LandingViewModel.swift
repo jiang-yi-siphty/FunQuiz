@@ -6,32 +6,11 @@
 //  Copyright © 2019 Siphty Pty Ltd. All rights reserved.
 //
 
-import Foundation
-
 class LandingViewModel {
-    
-    enum ViewMode {
-        case initial
-        case scored
-        case lastQuestion
-        
-        var hideScore: Bool {
-            switch self {
-            case .initial:
-                return true
-            default:
-                return false
-            }
-        } 
-    }
     
     // MARK: Variables
     var store: QuestionsStore
-    var mode: ViewMode = .initial {
-        didSet {
-            self.viewModeChanged?()
-        }
-    }
+    
     var questionsList: [Question]? {
         didSet {
             self.didUpdate?()
@@ -40,13 +19,11 @@ class LandingViewModel {
     
     var score: Int? {
         guard let questionList = store.quiz?.questions else { return nil }
-        return questionList.reduce(0, {
-            guard let correct = $1.correct else { return $0 }
-            return correct ? $0 ?? 0 + 1 : $0 })
+        return questionList.reduce(0) { $0 + ($1.correct ?? false ? 1 : 0)}
     }
     
     // MARK: Events 
-    var viewModeChanged: (() -> Void)?
+    var viewModeInitialized: (() -> Void)?
     var didUpdate: (() -> Void)?
     var hasAlertMessage: ((String) -> Void)?
     
@@ -54,12 +31,27 @@ class LandingViewModel {
     init(_ store: QuestionsStore = QuestionsStore.shared) {
         self.store = store
         store.fetchQuestions()
+        prepareStore()
     }
     
-    func prepareStore() { 
-        store.didUpdate = { [weak self] in
+    private func prepareStore() { 
+        store.storeInitialized = { [weak self] in
             guard let self = self else { return }
             self.questionsList = self.store.quiz?.questions
+            self.viewModeInitialized?()
+        }
+        
+        store.modeDidUpdate = {  [weak self] () in
+            guard let self = self else { return }
+            switch self.store.mode {
+            case .initial:
+                self.viewModeInitialized?()
+            case .startQuiz:
+                self.store.resetScore()
+                break
+            case .finishedQuiz:
+                self.didUpdate?()
+            }
         }
         
         store.hasCommonError = { error in 
@@ -72,7 +64,8 @@ class LandingViewModel {
         }
     }
     
-    func reset() {
+    func startQuiz() {
+        store.mode = .startQuiz
         store.fetchQuestions()
     }
 }

@@ -22,6 +22,14 @@
 		A29F18A1226DE1E800A73383 /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F18A0226DE1E800A73383 /* DataClient.swift */; };
 		A29F18A4226DF1EE00A73383 /* swiftQuestions.json in Resources */ = {isa = PBXBuildFile; fileRef = A29F18A3226DF1EE00A73383 /* swiftQuestions.json */; };
 		A29F18A7226DF45500A73383 /* QuestionsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F18A6226DF45500A73383 /* QuestionsStore.swift */; };
+		A29F18A92270838B00A73383 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F18A82270838B00A73383 /* Constants.swift */; };
+		A29F18AD2270AEFD00A73383 /* swiftQuestions_wrongFormate.json in Resources */ = {isa = PBXBuildFile; fileRef = A29F18AC2270AEFD00A73383 /* swiftQuestions_wrongFormate.json */; };
+		A29F18AF2270AF2200A73383 /* MockDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F18AE2270AF2200A73383 /* MockDataClient.swift */; };
+		A29F18B02270AF4F00A73383 /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F18A0226DE1E800A73383 /* DataClient.swift */; };
+		A29F18B12270B06700A73383 /* DataServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F189E226DE1D600A73383 /* DataServer.swift */; };
+		A29F18B22270B2EC00A73383 /* QuestionsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F18A6226DF45500A73383 /* QuestionsStore.swift */; };
+		A29F18B32270B31500A73383 /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F189A226DD61800A73383 /* Questions.swift */; };
+		A29F18B52270B5CA00A73383 /* swiftQuestions_CorrectFormate.json in Sources */ = {isa = PBXBuildFile; fileRef = A29F18B42270B5CA00A73383 /* swiftQuestions_CorrectFormate.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +71,10 @@
 		A29F18A0226DE1E800A73383 /* DataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClient.swift; sourceTree = "<group>"; };
 		A29F18A3226DF1EE00A73383 /* swiftQuestions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = swiftQuestions.json; sourceTree = "<group>"; };
 		A29F18A6226DF45500A73383 /* QuestionsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsStore.swift; sourceTree = "<group>"; };
+		A29F18A82270838B00A73383 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A29F18AC2270AEFD00A73383 /* swiftQuestions_wrongFormate.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = swiftQuestions_wrongFormate.json; sourceTree = "<group>"; };
+		A29F18AE2270AF2200A73383 /* MockDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataClient.swift; sourceTree = "<group>"; };
+		A29F18B42270B5CA00A73383 /* swiftQuestions_CorrectFormate.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = swiftQuestions_CorrectFormate.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +140,10 @@
 		A29F1875226DCCB200A73383 /* FunQuizTests */ = {
 			isa = PBXGroup;
 			children = (
+				A29F18AA2270AE7900A73383 /* Mock Json */,
 				A29F1876226DCCB200A73383 /* FunQuizTests.swift */,
 				A29F1878226DCCB200A73383 /* Info.plist */,
+				A29F18AE2270AF2200A73383 /* MockDataClient.swift */,
 			);
 			path = FunQuizTests;
 			sourceTree = "<group>";
@@ -201,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				A29F18A3226DF1EE00A73383 /* swiftQuestions.json */,
+				A29F18A82270838B00A73383 /* Constants.swift */,
 			);
 			path = SupportingFile;
 			sourceTree = "<group>";
@@ -211,6 +226,15 @@
 				A29F18A6226DF45500A73383 /* QuestionsStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		A29F18AA2270AE7900A73383 /* Mock Json */ = {
+			isa = PBXGroup;
+			children = (
+				A29F18AC2270AEFD00A73383 /* swiftQuestions_wrongFormate.json */,
+				A29F18B42270B5CA00A73383 /* swiftQuestions_CorrectFormate.json */,
+			);
+			path = "Mock Json";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,6 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29F18AD2270AEFD00A73383 /* swiftQuestions_wrongFormate.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A29F1867226DCCB000A73383 /* FunQuiz.xcdatamodeld in Sources */,
+				A29F18A92270838B00A73383 /* Constants.swift in Sources */,
 				A29F18A7226DF45500A73383 /* QuestionsStore.swift in Sources */,
 				A29F1897226DD5D700A73383 /* QuestionsViewModel.swift in Sources */,
 				A29F18A1226DE1E800A73383 /* DataClient.swift in Sources */,
@@ -361,7 +387,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29F18B12270B06700A73383 /* DataServer.swift in Sources */,
+				A29F18B22270B2EC00A73383 /* QuestionsStore.swift in Sources */,
+				A29F18AF2270AF2200A73383 /* MockDataClient.swift in Sources */,
+				A29F18B32270B31500A73383 /* Questions.swift in Sources */,
 				A29F1877226DCCB200A73383 /* FunQuizTests.swift in Sources */,
+				A29F18B52270B5CA00A73383 /* swiftQuestions_CorrectFormate.json in Sources */,
+				A29F18B02270AF4F00A73383 /* DataClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

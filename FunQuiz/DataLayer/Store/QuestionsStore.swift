@@ -10,6 +10,17 @@ import Foundation
 
 class QuestionsStore {
     
+    enum Mode {
+        case initial
+        case finishedQuiz
+        case startQuiz
+    }
+    
+    var mode: Mode = .initial {
+        didSet {
+            self.modeDidUpdate?()
+        }
+    }
     static let shared = QuestionsStore()
     let notificationCenter = NotificationCenter.default
     
@@ -19,7 +30,7 @@ class QuestionsStore {
     // MARK: Data Binding
     var quiz: Questions? {
         didSet {
-            didUpdate?()
+            storeInitialized?()
         }
     }
     
@@ -30,14 +41,21 @@ class QuestionsStore {
         }
     }
     
+    var score: Int? 
+    
     // MARK: Events 
-    var didUpdate: (() -> Void)?
+    var storeInitialized: (() -> Void)?
+    var modeDidUpdate: (() -> Void)?
     var hasCommonError: ((CommonError) -> Void)?
     
     
     // MARK: Init
     init(dataClient: DataClient = DataClient()) {
         self.dataClient = dataClient
+    }
+    
+    func resetScore() {
+        fetchQuestions()
     }
     
 }

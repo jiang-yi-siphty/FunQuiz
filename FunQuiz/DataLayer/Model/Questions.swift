@@ -8,12 +8,12 @@
 
 struct Questions: Codable {
     let domain: String
-    let questions: [Question]
+    var questions: [Question]
     var score: Int?
 } 
 
 struct Question: Codable {
     let question: String
     let answer: Bool
-    let correct: Bool?
+    var correct: Bool?
 }
