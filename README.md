@@ -7,9 +7,9 @@ The Fun Quiz is a simple project to present my iOS developing skill and architec
 I haven't any package managerment tool, like cocoapods, in this repo. You don't need to install pods before open the project. Just double click FunQuiz.xcodeproj in the folder to open the project automatically. :)  
 
 ## Devleoping Enviornment
-*Xcode 10.2.1*
-*Swift 5*
-*macOS Majave Version 10.14.4*
+*Xcode 10.2.1*  
+*Swift 5*  
+*macOS Majave Version 10.14.4*  
 
 ### Architeture
 
